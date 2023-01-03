@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+
+const int NUM_STUDENTS = 15;
+
+struct Student {
+  int rollNo;
+  std::string name;
+  float SGPA;
+};
+
+void quickSort(Student students[], int left, int right) {
+  int i = left, j = right;
+  Student pivot = students[(left + right) / 2];
+
+  while (i <= j) {
+    while (students[i].SGPA > pivot.SGPA) {
+      i++;
+    }
+    while (students[j].SGPA < pivot.SGPA) {
+      j--;
+    }
+    if (i <= j) {
+      Student temp = students[i];
+      students[i] = students[j];
+      students[j] = temp;
+      i++;
+      j--;
+    }
+  }
+
+  if (left < j) {
+    quickSort(students, left, j);
+  }
+  if (i < right) {
+    quickSort(students, i, right);
+  }
+}
+
+int main() {
+  Student students[NUM_STUDENTS];
+
+  // Fill the array with student records
+  // ...
+
+  quickSort(students, 0, NUM_STUDENTS - 1);
+
+  std::cout << "Top Ten Students:" << std::endl;
+  for (int i = 0; i < 10; i++) {
+    std::cout << students[i].name << " " << students[i].SGPA << std::endl;
+  }
+
+  return 0;
+}

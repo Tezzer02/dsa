@@ -1,0 +1,146 @@
+
+#include<iostream>
+
+using namespace std;
+
+
+
+struct Student{
+	int roll;
+	string name;
+	float sgpa;
+};
+void show1(Student *a[], int n) //Printing the data of students
+{
+	cout<<"Roll "<<" "<<"Name "<<" "<<"Sgpa "<<endl;
+ for (int i=0;i<n;i++) 
+ { 
+ 
+   cout<<a[i]->roll<<" "; 
+   cout<<a[i]->name<<" "; 
+   cout<<a[i]->sgpa<<"\n"; 
+
+ } 
+} 
+
+void bubSort(Student*a[],int n){
+	for(int k=0; k<n-1;k++){
+		for(int j=0;j<n-k;j++){
+			if(a[j]->roll>a[j+1]->roll){
+				swap(a[j],a[j+1]);
+			}
+		}
+	}
+}
+
+ int partition(Student *d[],int s, int e){
+	
+	int pivot=d[s]->sgpa;
+	
+	int count=0;
+	for(int i=s+1;i<=e;i++){
+		if(d[i]->sgpa<pivot){
+			count++;
+		}
+		
+	}
+	
+	int pivotIndex=s+count;
+	swap(d[pivotIndex],d[s]);
+	
+	int i=s;
+	int j=e;
+	while(i<pivotIndex&&i>pivotIndex){
+		while(d[i]->sgpa<pivot){
+			i++;
+		}
+		while(d[j]->sgpa>pivot){
+			j--;
+		}
+		if(i<pivotIndex&&i>pivotIndex){
+			swap(d[i++],d[j--]);
+		}
+	}
+	return pivotIndex;
+}
+void quickSort(Student *a[],int s,int e){
+	if(s>=e){
+		return;
+	}
+	
+	int p= partition(a,s,e);
+	
+//	left part
+	quickSort(a,s,p-1);
+	
+//	right part
+	quickSort(a,p+1,e);
+	
+}
+int main(){
+	Student *s[20];
+	int i=0;
+	int exit=0;
+	int ch;
+	loop1:
+		cout<<"Enter your choice : \n"<<endl;
+		cout<<"1. Enter student " <<endl;
+		cout<<"2. see Students roll number wise"<<endl;
+		cout<<"3. See Toppers "<<endl;
+		cout<<"4. Exit "<<endl;
+		cin>>ch;
+	
+	do{
+		
+		
+		if(ch==1){
+			 
+			
+				cout<<"ENTER DETAILS: \n"; 
+				   do 
+				   { 
+				     cout<<"STUDENT "<<i+1<<" RECORD:\n"; 
+				     s[i]=new Student; 
+				     cout<<"Roll no :"; 
+				     cin>>s[i]->roll; 
+				     cout<<"Name: "; 
+				     cin>>s[i]->name; 
+				     cout<<"SGPA: "; 
+				     cin>>s[i]->sgpa;
+				     i+=1;
+					 cout<<"DO YOU WANT TO INPUT MORE RECORDS (enter 1 if yes) \n"; 
+				     cin>>ch; 
+				       
+				      } 
+  					 while(ch==1); 
+  					 goto loop1;
+			}
+			else if(ch==2){
+			
+				cout<<"\n Students are in Roll no. wise "<<endl;
+				bubSort(s,i);
+				show1(s,i);
+				goto loop1;
+			}
+				
+			else if(ch==3){
+					quickSort(s,0,i);
+					cout<<"\nToppers are"<<endl;
+					for(int i=1;i<3;i++){
+						cout<<s[i]->roll<<" ";
+						cout<<s[i]->name<<" ";
+						cout<<s[i]->sgpa<<"\n";
+					}
+					
+				
+			}
+			else if(ch==4){
+				exit=1;
+			}
+			else{
+				cout<<"\n Invalid Input"<<endl;
+			}
+		
+	}while(exit==0);	
+	return 0;
+}

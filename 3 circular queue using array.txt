@@ -1,0 +1,70 @@
+#include <iostream>
+
+const int QUEUE_SIZE = 5;
+
+class Queue {
+ public:
+  Queue() : head_(0), tail_(0), size_(0) {}
+
+  void Enqueue(int data) {
+    if (size_ == QUEUE_SIZE) {
+      std::cerr << "Error: queue is full" << std::endl;
+      return;
+    }
+    queue_[tail_] = data;
+    tail_ = (tail_ + 1) % QUEUE_SIZE;
+    size_++;
+  }
+
+  int Dequeue() {
+    if (size_ == 0) {
+      std::cerr << "Error: queue is empty" << std::endl;
+      return -1;
+    }
+    int data = queue_[head_];
+    head_ = (head_ + 1) % QUEUE_SIZE;
+    size_--;
+    return data;
+  }
+
+  void Display() {
+    if (size_ == 0) {
+      std::cout << "Queue is empty" << std::endl;
+      return;
+    }
+    for (int i = head_; i != tail_; i = (i + 1) % QUEUE_SIZE) {
+      std::cout << queue_[i] << " ";
+    }
+    std::cout << std::endl;
+  }
+
+ private:
+  int queue_[QUEUE_SIZE];
+  int head_;
+  int tail_;
+  int size_;
+};
+
+int main() {
+  Queue queue;
+
+  queue.Enqueue(1);
+  queue.Enqueue(2);
+  queue.Enqueue(3);
+
+  queue.Display();  // Output: 1 2 3
+
+  queue.Dequeue();
+  queue.Dequeue();
+
+  queue.Display();  // Output: 3
+
+  queue.Enqueue(4);
+  queue.Enqueue(5);
+  queue.Enqueue(6);
+  queue.Enqueue(7);  // Error: queue is full
+
+  queue.Display();  // Output: 3 4 5 6
+
+  return 0;
+}

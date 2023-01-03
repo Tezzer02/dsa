@@ -1,0 +1,91 @@
+#include<iostream>
+#include<conio.h>
+#include<stack>
+
+using namespace std;
+
+class Node{
+	public:
+	Node *left,*right;
+	int data;
+		Node(int d){
+			this->data=d;
+			this->left=NULL;
+			this->right=NULL;
+		}
+};
+
+Node *creatTree(){
+	int data;
+	
+	Node *root=NULL;
+	cout<<"  Enter data for root : "<<endl;
+	cin>>data;
+	if(data==-1){
+		return NULL;
+	}
+	root=new Node(data);
+	
+	cout<<"\n Left Node of "<<data;
+	root->left=creatTree();
+	cout<<"right Node of "<<data;
+	root->right=creatTree();
+	
+	return root;
+}
+
+
+void inOrder(Node *root){
+	if(root==NULL){
+		return;
+	}
+	inOrder(root->left);
+	cout<<root->data<<' ';
+	inOrder(root->right);
+
+
+//non recursive traversal
+//stack<Node*>s;
+//
+//Node *curr=root;
+//
+//while(s.empty()==false||curr!=NULL){
+//	while(curr!=NULL){
+//		s.push(curr);
+//		curr->left;		
+//	}
+//	curr=s.top();
+//	cout<<curr->data<<" ";
+//	curr=curr->right;
+//}
+
+}
+void postOrder(Node *root){
+	if(root==NULL){
+		return;
+	}
+	postOrder(root->left);
+	postOrder(root->right);
+	cout<<root->data<<' ';
+}
+void preOrder(Node *root){
+	if(root==NULL){
+		return;
+	}
+	cout<<root->data<<' ';
+	
+	preOrder(root->left);
+	
+	preOrder(root->right);
+}
+
+int main(){
+	Node *root=creatTree();
+	
+	cout<<"\n In-Order traversal Is : "<<endl;
+	inOrder(root);
+	cout<<"\n Pre-Order traversal Is : "<<endl;
+	preOrder(root);
+	cout<<"\n Post-Order traversal Is : "<<endl;
+	postOrder(root);
+} 

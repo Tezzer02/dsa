@@ -1,0 +1,40 @@
+#include <iostream>
+#include <algorithm>
+
+struct Student {
+  int rollNo;
+  std::string name;
+  double SGPA;
+};
+
+// Function to sort the student database by roll number using bubble sort
+void sortByRollNo(Student students[], int n) {
+  for (int i = 0; i < n - 1; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+      if (students[j].rollNo > students[j + 1].rollNo) {
+        std::swap(students[j], students[j + 1]);
+      }
+    }
+  }
+}
+
+int main() {
+  // Initialize student database with at least 15 records
+  Student students[] = {{1, "Alice", 3.9}, {2, "Bob", 3.6}, {3, "Charlie", 3.8},
+                        {4, "Dave", 3.7}, {5, "Eve", 3.9}, {6, "Frank", 3.4},
+                        {7, "Gina", 3.5}, {8, "Harry", 3.9}, {9, "Izzy", 3.2},
+                        {10, "Jane", 3.7}, {11, "Kate", 3.8}, {12, "Larry", 3.3},
+                        {13, "Mike", 3.5}, {14, "Nancy", 3.6}, {15, "Oscar", 3.7}};
+  int n = sizeof(students) / sizeof(students[0]);
+
+  // Sort the student database by roll number
+  sortByRollNo(students, n);
+
+  // Print the roll call list
+  std::cout << "Roll Call List:" << std::endl;
+  for (int i = 0; i < n; i++) {
+    std::cout << students[i].rollNo << " " << students[i].name << std::endl;
+  }
+
+  return 0;
+}
